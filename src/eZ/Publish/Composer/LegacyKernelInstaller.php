@@ -61,7 +61,7 @@ class LegacyKernelInstaller extends LegacyInstaller
         parent::install( $repo, $package );
 
         /// @todo the following function does not warn of any failures in copying stuff over. We should probably fix it...
-        $fileSystem->copyThenRemove( $this->ezpublishLegacyDir, $legacyDir );
+        $fileSystem->copyThenRemove( $this->ezpublishLegacyDir, $actualLegacyDir );
 
         // if parent::install installed binaries, then the resulting shell/bat stubs will not work. We have to redo them
         $this->removeBinaries( $package );
