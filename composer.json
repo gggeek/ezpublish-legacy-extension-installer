@@ -1,5 +1,5 @@
 {
-    "name": "gggeek/ezpublish-legacy-installer",
+    "name": "ezsystems/ezpublish-legacy-installer",
     "type": "composer-installer",
     "description": "Installer for eZ Publish legacy extensions and legacy kernel itself.",
     "license": "GPL-2.0",
