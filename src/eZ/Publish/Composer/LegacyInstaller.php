@@ -33,7 +33,7 @@ class LegacyInstaller extends LibraryInstaller
      */
     public function getInstallPath( PackageInterface $package )
     {
-        if ( $this->type != $package->getType() != $this->type )
+        if ( $package->getType() != $this->type )
         {
             throw new InvalidArgumentException( "Installer only supports {$this->type} package type, got instead: " . $package->getType() );
         }
