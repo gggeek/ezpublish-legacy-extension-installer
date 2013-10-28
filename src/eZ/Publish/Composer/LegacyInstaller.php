@@ -41,4 +41,4 @@ class LegacyInstaller extends LibraryInstaller
         return $this->ezpublishLegacyDir;
     }
 
-} 
+}

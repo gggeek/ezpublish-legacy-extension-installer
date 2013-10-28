@@ -13,18 +13,13 @@ use Composer\Composer;
 use Composer\IO\IOInterface;
 
 /**
- * All ths class does is to tell composer that extensions have to be installed in a
+ * All this class does is to tell composer that extensions have to be installed in a
  * different directory
  */
 class LegacyExtensionInstaller extends LegacyInstaller
 {
-    protected $ezpublishLegacyDir;
-
     public function __construct( IOInterface $io, Composer $composer, $type = 'ezpublish-legacy-extension' )
     {
         parent::__construct( $io, $composer, $type );
     }
-
-
-
 }

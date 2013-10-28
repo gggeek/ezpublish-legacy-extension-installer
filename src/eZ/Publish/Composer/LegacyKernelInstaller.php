@@ -17,6 +17,8 @@ use Composer\Util\Filesystem;
 
 class LegacyKernelInstaller extends LegacyInstaller
 {
+    protected $avoid_code_removal = false;
+
     public function __construct( IOInterface $io, Composer $composer, $type = 'ezpublish-legacy' )
     {
         parent::__construct( $io, $composer, $type );
@@ -48,7 +50,7 @@ class LegacyKernelInstaller extends LegacyInstaller
      */
     public function install( InstalledRepositoryInterface $repo, PackageInterface $package )
     {
-        $downloadPath = $this->getInstallPath($package);
+        $downloadPath = $this->getInstallPath( $package );
         $fileSystem = new Filesystem();
         if ( !is_dir( $downloadPath ) || $fileSystem->isDirEmpty( $downloadPath ) )
         {
@@ -67,6 +69,24 @@ class LegacyKernelInstaller extends LegacyInstaller
         $this->removeBinaries( $package );
         $this->ezpublishLegacyDir = $actualLegacyDir;
         $this->installBinaries( $package );
+    }
+
+    /**
+     * Same as install(): we need to insure there is no removal of actual eZ code.
+     * updateCode is called by update()
+     */
+    public function updateCode( PackageInterface $initial, PackageInterface $target )
+    {
+        $actualLegacyDir = $this->ezpublishLegacyDir;
+        $this->ezpublishLegacyDir = $this->generateTempDirName();
+
+        $this->installCode( $target );
+
+        $fileSystem = new Filesystem();
+        /// @todo the following function does not warn of any failures in copying stuff over. We should probably fix it...
+        $fileSystem->copyThenRemove( $this->ezpublishLegacyDir, $actualLegacyDir );
+
+        $this->ezpublishLegacyDir = $actualLegacyDir;
     }
 
     /**
