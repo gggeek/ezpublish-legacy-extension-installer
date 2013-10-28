@@ -52,8 +52,7 @@ class LegacyKernelInstaller extends LegacyInstaller
         $fileSystem = new Filesystem();
         if ( !is_dir( $downloadPath ) || $fileSystem->isDirEmpty( $downloadPath ) )
         {
-            parent::install( $repo, $package );
-            return;
+            return parent::install( $repo, $package );
         }
 
         $actualLegacyDir = $this->ezpublishLegacyDir;
