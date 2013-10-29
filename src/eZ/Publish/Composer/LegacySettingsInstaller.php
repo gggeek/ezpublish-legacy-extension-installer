@@ -12,12 +12,12 @@ namespace eZ\Publish\Composer;
 use Composer\Composer;
 use Composer\IO\IOInterface;
 use Composer\Package\PackageInterface;
-use InvalidArgumentException;
+use Composer\Repository\InstalledRepositoryInterface;
 
 /**
  * This class allows user to deploy eZ LS setting as composer packages
  *
- * @todo ideally we should always remove anyting in settings/siteaccess and settings/override when we install or upgrade
+ * @todo ideally we should always remove anything in settings/siteaccess and settings/override when we install or upgrade
  *       (but of course keep all settings/*.ini)
  */
 class LegacySettingsInstaller extends LegacyKernelInstaller
@@ -27,14 +27,22 @@ class LegacySettingsInstaller extends LegacyKernelInstaller
         parent::__construct( $io, $composer, $type );
     }
 
+    /**
+     * We override this because existence of 'settings' dir is not enough - we add for good measure a check for
+     * existence of siteaccess or override
+     * @param InstalledRepositoryInterface $repo
+     * @param PackageInterface $package
+     * @return bool
+     */
+    public function isInstalled( InstalledRepositoryInterface $repo, PackageInterface $package)
+    {
+        return parent::isInstalled( $repo, $package ) && (
+            is_dir( $this->ezpublishLegacyDir . '/settings/override' ) || is_dir( $this->ezpublishLegacyDir . '/settings/siteaccess' ) );
+    }
+
     public function getInstallPath( PackageInterface $package )
     {
-        if ( $package->getType() != $this->type )
-        {
-            throw new InvalidArgumentException( "Installer only supports {$this->type} package type, got instead: " . $package->getType() );
-        }
-
-        return $this->ezpublishLegacyDir . '/settings';
+        return parent::getInstallPath( $package ) . '/settings';
     }
 
     protected function generateTempDirName()

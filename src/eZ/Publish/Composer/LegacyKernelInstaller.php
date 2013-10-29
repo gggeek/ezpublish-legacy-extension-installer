@@ -61,7 +61,7 @@ class LegacyKernelInstaller extends LegacyInstaller
         parent::install( $repo, $package );
 
         /// @todo the following function does not warn of any failures in copying stuff over. We should probably fix it...
-        $fileSystem->copyThenRemove( $this->ezpublishLegacyDir, $actualLegacyDir );
+        $fileSystem->copyThenRemove( $this->ezpublishLegacyDir, $downloadPath );
 
         // if parent::install installed binaries, then the resulting shell/bat stubs will not work. We have to redo them
         $this->removeBinaries( $package );
@@ -75,6 +75,8 @@ class LegacyKernelInstaller extends LegacyInstaller
      */
     public function updateCode( PackageInterface $initial, PackageInterface $target )
     {
+        $downloadPath = $this->getInstallPath( $package );
+
         $actualLegacyDir = $this->ezpublishLegacyDir;
         $this->ezpublishLegacyDir = $this->generateTempDirName();
 
@@ -82,7 +84,7 @@ class LegacyKernelInstaller extends LegacyInstaller
 
         $fileSystem = new Filesystem();
         /// @todo the following function does not warn of any failures in copying stuff over. We should probably fix it...
-        $fileSystem->copyThenRemove( $this->ezpublishLegacyDir, $actualLegacyDir );
+        $fileSystem->copyThenRemove( $this->ezpublishLegacyDir, $downloadPath );
 
         $this->ezpublishLegacyDir = $actualLegacyDir;
     }
