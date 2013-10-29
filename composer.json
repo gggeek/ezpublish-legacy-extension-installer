@@ -20,7 +20,8 @@
     "extra": {
         "class":  [
             "eZ\\Publish\\Composer\\LegacyKernelInstaller",
-            "eZ\\Publish\\Composer\\LegacyExtensionInstaller"
+            "eZ\\Publish\\Composer\\LegacyExtensionInstaller",
+            "eZ\\Publish\\Composer\\LegacySettingsInstaller"
         ]
     }
 }
