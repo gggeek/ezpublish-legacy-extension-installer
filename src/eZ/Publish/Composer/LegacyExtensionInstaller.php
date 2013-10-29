@@ -11,6 +11,8 @@ namespace eZ\Publish\Composer;
 
 use Composer\Composer;
 use Composer\IO\IOInterface;
+use Composer\Package\PackageInterface;
+use InvalidArgumentException;
 
 /**
  * All this class does is to tell composer that extensions have to be installed in a
@@ -22,4 +24,15 @@ class LegacyExtensionInstaller extends LegacyInstaller
     {
         parent::__construct( $io, $composer, $type );
     }
+
+    public function getInstallPath( PackageInterface $package )
+    {
+        if ( $package->getType() != $this->type )
+        {
+            throw new InvalidArgumentException( "Installer only supports {$this->type} package type, got instead: " . $package->getType() );
+        }
+
+        return $this->ezpublishLegacyDir . '/extension';
+    }
+
 }

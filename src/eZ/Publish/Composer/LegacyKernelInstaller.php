@@ -17,8 +17,6 @@ use Composer\Util\Filesystem;
 
 class LegacyKernelInstaller extends LegacyInstaller
 {
-    protected $avoid_code_removal = false;
-
     public function __construct( IOInterface $io, Composer $composer, $type = 'ezpublish-legacy' )
     {
         parent::__construct( $io, $composer, $type );
