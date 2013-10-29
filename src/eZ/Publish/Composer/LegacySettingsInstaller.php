@@ -11,6 +11,8 @@ namespace eZ\Publish\Composer;
 
 use Composer\Composer;
 use Composer\IO\IOInterface;
+use Composer\Package\PackageInterface;
+use InvalidArgumentException;
 
 /**
  * This class allows user to deploy eZ LS setting as composer packages
