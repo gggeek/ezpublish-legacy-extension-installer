@@ -26,7 +26,8 @@ class LegacyExtensionInstaller extends LegacyInstaller
 
     public function getInstallPath( PackageInterface $package )
     {
-        return parent::getInstallPath( $package ) . '/extension';
+        list( $vendor, $packageName ) = explode( '/', $package->getPrettyName(), 2 );
+        return parent::getInstallPath( $package ) . '/extension' . $packageName;
     }
 
 }
